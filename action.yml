@@ -1,4 +1,4 @@
-name: "Helm Deploy"
+name: "Helm Configure & Deploy"
 description: "Configures Kubernetes config, sets up Helm and deploys Helm chart"
 
 inputs:
