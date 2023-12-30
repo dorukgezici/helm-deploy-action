@@ -2,34 +2,33 @@ name: "Helm Configure & Deploy"
 description: "Configures Kubernetes config, sets up Helm and deploys Helm chart"
 icon: "upload-cloud"
 color: "blue"
-
 inputs:
   kubeconfig-base64:
+    required: true
     description: "Kubernetes config file (base64 encoded)"
-    required: true
   installation-name:
-    description: "Helm installation name"
     required: true
+    description: "Helm installation name"
   namespace:
-    description: "Kubernetes namespace"
     required: true
     default: "default"
+    description: "Kubernetes namespace"
   chart-path:
-    description: "Path to Helm chart"
-    required: true
+    required: false
     default: "k8s-helm"
+    description: "Path to Helm chart"
   extra-args:
+    required: false
     description: "Additional arguments to pass to Helm"
-    required: false
   token:
-    description: GitHub token
     required: false
-
+    description: GitHub token
 runs:
   using: "composite"
-  post: rm -rf ~/.kube
+  post: "rm -rf ~/.kube"
   steps:
     - name: Set up kube config
+      shell: bash
       run: |
         mkdir -p ~/.kube
         echo ${{ inputs.kubeconfig-base64 }} | base64 -d > ~/.kube/config
@@ -46,4 +45,5 @@ runs:
         NAMESPACE: ${{ inputs.namespace }}
         CHART_PATH: ${{ inputs.chart-path }}
         EXTRA_ARGS: ${{ inputs.extra-args }}
+      shell: bash
       run: helm upgrade $INSTALLATION_NAME $CHART_PATH -n $NAMESPACE --install --wait $EXTRA_ARGS
