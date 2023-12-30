@@ -1,5 +1,7 @@
 name: "Helm Configure & Deploy"
 description: "Configures Kubernetes config, sets up Helm and deploys Helm chart"
+icon: "upload-cloud"
+color: "blue"
 
 inputs:
   kubeconfig-base64:
