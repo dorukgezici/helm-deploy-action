@@ -10,5 +10,6 @@ A GitHub Action that configures Kubernetes config, sets up Helm and deploys your
 - `installation-name`: Helm installation name
 - `namespace`: Kubernetes namespace
 - `chart-path`: Path to Helm chart
+- `wait-ready`: (boolean) Wait for the installation to be ready
 - `extra-args`: Additional arguments to pass to Helm
 - `token`: GitHub token
