@@ -18,6 +18,10 @@ inputs:
     required: false
     default: "k8s-helm"
     description: "Path to Helm chart"
+  wait-ready:
+    required: false
+    default: false
+    description: "Wait for the installation to be ready"
   extra-args:
     required: false
     description: "Additional arguments to pass to Helm"
@@ -46,8 +50,9 @@ runs:
         NAMESPACE: ${{ inputs.namespace }}
         CHART_PATH: ${{ inputs.chart-path }}
         EXTRA_ARGS: ${{ inputs.extra-args }}
+        WAIT_READY: ${{ inputs.wait-ready && '--wait' || '' }}
       shell: bash
-      run: helm upgrade $INSTALLATION_NAME $CHART_PATH -n $NAMESPACE --install --wait $EXTRA_ARGS
+      run: helm upgrade $INSTALLATION_NAME $CHART_PATH -n $NAMESPACE --install $WAIT_READY $EXTRA_ARGS
 
     - name: Clean up
       shell: bash
